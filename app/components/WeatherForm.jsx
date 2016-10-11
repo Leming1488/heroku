@@ -13,7 +13,7 @@ const WeatherForm = React.createClass({
     return (
       <form onSubmit={this.onFormSubmit}>
         <input type="text" placeholder="Погода" ref="location"></input>
-        <button type="submit">Отправить</button>
+        <button className="expanded button" type="submit">Отправить</button>
       </form>
     );
   }
