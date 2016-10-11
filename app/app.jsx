@@ -6,6 +6,10 @@ const Weather = require('Weather');
 const About = require('About');
 const Examples = require('Examples');
 
+
+require('style!css!foundation-sites/dist/foundation.min.css');
+$(document).foundation();
+
 ReactDOM.render(
   <Router history = {hashHistory}>
     <Route path = '/' component = {Main}>
@@ -13,4 +17,5 @@ ReactDOM.render(
       <Route path = 'examples' component = {Examples}/>
       <IndexRoute component ={Weather}/>
     </Route>
-  </Router>, document.querySelector('#app'));
+  </Router>, document.querySelector('#app')
+);
