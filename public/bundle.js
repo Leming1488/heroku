@@ -113,6 +113,8 @@
 	__webpack_require__(273);
 	$(document).foundation();
 	
+	__webpack_require__(277);
+	
 	ReactDOM.render(React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -27198,7 +27200,12 @@
 	
 	  onSearch: function onSearch(e) {
 	    e.preventDefault();
-	    alert('dasd');
+	    var location = this.refs.search.value;
+	    var encodedLocation = encodeURIComponent(location);
+	    if (location.length > 0) {
+	      this.refs.search.value = '';
+	      window.location.hash = '#/?location=' + encodedLocation;
+	    }
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -27256,7 +27263,7 @@
 	            React.createElement(
 	              'li',
 	              null,
-	              React.createElement('input', { type: 'search', placeholder: 'Search weather' })
+	              React.createElement('input', { type: 'search', placeholder: 'Search weather', ref: 'search' })
 	            ),
 	            React.createElement(
 	              'li',
@@ -27296,7 +27303,9 @@
 	    var that = this;
 	    this.setState({
 	      isLoading: true,
-	      errorMessage: undefined
+	      errorMessage: undefined,
+	      location: undefined,
+	      temp: undefined
 	    });
 	    openWeatherMap.getTemp(location).then(function (temp) {
 	      that.setState({
@@ -27310,6 +27319,22 @@
 	        errorMessage: e.message
 	      });
 	    });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var location = this.props.location.query.location;
+	
+	    if (location && location.length > 0) {
+	      this.handleSearch(location);
+	      window.location.hash = '#/';
+	    }
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    var location = newProps.location.query.location;
+	
+	    if (location && location.length > 0) {
+	      this.handleSearch(location);
+	      window.location.hash = '#/';
+	    }
 	  },
 	  render: function render() {
 	    var _state = this.state;
@@ -27340,7 +27365,7 @@
 	      null,
 	      React.createElement(
 	        'h1',
-	        null,
+	        { className: 'text-center page-title' },
 	        'Get Weather'
 	      ),
 	      React.createElement(WeatherForm, { onSearch: this.handleSearch }),
@@ -27375,7 +27400,7 @@
 	    return React.createElement(
 	      'form',
 	      { onSubmit: this.onFormSubmit },
-	      React.createElement('input', { type: 'text', placeholder: '\u041F\u043E\u0433\u043E\u0434\u0430', ref: 'location' }),
+	      React.createElement('input', { type: 'search', placeholder: 'Search weather', ref: 'location' }),
 	      React.createElement(
 	        'button',
 	        { className: 'expanded button', type: 'submit' },
@@ -28880,7 +28905,7 @@
 	    null,
 	    React.createElement(
 	      'h1',
-	      { className: 'text-center' },
+	      { className: 'text-center page-title' },
 	      'Examples'
 	    ),
 	    React.createElement(
@@ -29261,6 +29286,46 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(278);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(276)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./app.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./app.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(275)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".page-title {\n  margin-top: 2.5rem;\n  margin-bottom: 2.5rem;\n}\n", ""]);
+	
+	// exports
 
 
 /***/ }
