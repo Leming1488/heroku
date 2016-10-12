@@ -1,3 +1,7 @@
+var fs = require('fs');
+var gracefulFs = require('graceful-fs');
+gracefulFs.gracefulify(fs);
+
 const webpack = require('webpack');
 module.exports = {
   entry: [
